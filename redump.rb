@@ -3,10 +3,9 @@ require 'open-uri'
 require 'date'
 
 base_url = "http://redump.org/discs/system/ps2/"
-games = []
-chunk = 0
 
 (1..24).each do |page|
+  games = []
   url = "#{base_url}?page=#{page}"
   puts "Fetching data from: #{url}"
   chunk = page
@@ -84,7 +83,6 @@ chunk = 0
       puts "#{page.to_s.rjust(3, '0')} : #{region} : #{code} : #{rel} : #{name}"
       games << { region: region, page: page.to_s.rjust(3, '0'), code: code, name: name, rel: rel }
    end
-end
 
 html_template = <<~HTML
   <!DOCTYPE html>
@@ -92,7 +90,7 @@ html_template = <<~HTML
   <head>
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>PS2 Games List</title>
+      <title>PS2 Game List</title>
       <style>
           table {
               width: 100%;
@@ -130,3 +128,5 @@ HTML
 
 File.write("ps2_games_#{chunk}.html", html_template)
 puts "HTML file generated \"ps2_games_#{chunk}.html\"."
+
+end
